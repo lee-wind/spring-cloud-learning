@@ -1,0 +1,32 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: cloud-turbine
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-interval: 10s
+        instance-id: ${spring.application.name}
+        service-name: ${spring.application.name}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+
+turbine:
+  app-config: cloud-provider3, cloud-provider4
+  aggregator:
+    cluster-config: default
+  cluster-name-expression: new String("default")
+  combine-host-port: true
+  instanceUrlSuffix:
+    default: actuator/hystrix.stream

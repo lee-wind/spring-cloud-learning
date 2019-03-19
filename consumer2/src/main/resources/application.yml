@@ -1,0 +1,18 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: cloud-consumer2
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-interval: 10s
+        instance-id: ${spring.application.name}
+        service-name: ${spring.application.name}
+
+feign:
+  hystrix:
+    enabled: true

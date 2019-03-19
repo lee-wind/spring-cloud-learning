@@ -1,0 +1,36 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-interval: 10s
+        instance-id: ${spring.application.name}
+        service-name: ${spring.application.name}
+    gateway:
+      default-filters:
+      routes:
+      - id: ${spring.application.name}
+        uri: lb://${spring.application.name}
+        predicates:
+        - Path= /gateway/**
+        filters:
+        - StripPrefix= 1
+      - id: cloud-consumer1
+        uri: lb://cloud-consumer1
+        predicates:
+        - Path= /consumer1/**
+        filters:
+        - StripPrefix= 1
+        - JwtAuth
+      - id: cloud-consumer2
+        uri: lb://cloud-consumer2
+        predicates:
+        - Path= /consumer2/**
+        filters:
+        - StripPrefix= 1

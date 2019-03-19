@@ -1,0 +1,22 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-interval: 10s
+        instance-id: ${spring.application.name}
+        service-name: ${spring.application.name}
+    config:
+      server:
+        git:
+          uri: https://github.com/forezp/SpringcloudConfig/
+          search-paths: respo
+          username:
+          password:
+      label: master
